@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/niclin/Incubit_interview_test.svg?branch=master)](https://travis-ci.com/niclin/Incubit_interview_test)
+
 ## Incubit, Inc. 的 Senior Web Developer (Rails) Code Test
 
 Please implement a user registration system in Ruby on Rails. The system would require following features:
