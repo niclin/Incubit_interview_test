@@ -10,6 +10,7 @@
   </head>
 
   <body>
+    <%= '登入中' if user_signed_in? %>
     <%= yield %>
   </body>
 </html>
