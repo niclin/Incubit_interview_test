@@ -4,6 +4,6 @@ class UserMailer < ApplicationMailer
   def welcome(user_id)
     @user = User.find(user_id)
 
-    mail(to: "#{user.name} #{user.email}", subject: "Welcome")
+    mail(to: "#{@user.name} #{@user.email}", subject: "Welcome")
   end
 end
