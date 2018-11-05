@@ -9,6 +9,7 @@ class UsersController < ApplicationController
     if @user.save
       UserMailer.welcome(@user.id).deliver_now
       flash[:success] = "Singup successful!"
+      log_in @user
       redirect_to @user
     else
       render 'new'
