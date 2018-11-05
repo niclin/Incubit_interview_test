@@ -7,12 +7,10 @@ class UserMailer < ApplicationMailer
     mail(to: "#{@user.name} #{@user.email}", subject: "Welcome")
   end
 
-
-  def password_reset(user_id)
+  def password_reset(user_id, token)
     @user = User.find(user_id)
-    @user.create_reset_digest
 
-    @reset_token = @user.reset_token
+    @token = token
 
     mail(to: "#{@user.name} #{@user.email}", subject: "Password reset")
   end
