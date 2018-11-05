@@ -28,8 +28,7 @@ class PasswordResetsController < ApplicationController
       render 'edit'
     elsif @user.update_attributes(user_params)
       log_in @user
-      flash[:success] = "Password has been reset."
-      redirect_to @user
+      redirect_to @user, notice: "Password has been reset."
     else
       render 'edit'
     end
@@ -53,7 +52,7 @@ class PasswordResetsController < ApplicationController
 
   def check_expiration
     if @user.password_reset_expired?
-      flash[:danger] = "Password reset has expired."
+      flash[:warning] = "Password reset has expired."
       redirect_to new_password_reset_url
     end
   end

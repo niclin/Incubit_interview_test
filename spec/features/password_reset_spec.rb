@@ -30,17 +30,49 @@ RSpec.feature "User password resets" do
     expect(page).to have_content("Welcome")
   end
 
-  scenario "Right email and wrong token" do
+  scenario "Redirect to root if right email and wrong token" do
     visit "/password_resets/wrong_token/edit?email=xxx@gmail.com"
 
     expect(page).to have_content("Welcome")
   end
 
-  scenario "Right email and right token" do
+  scenario "Get the reset password page if right email and right token" do
     user.send_password_reset_email
 
     visit "/password_resets/#{user.reset_token}/edit?email=#{user.email}"
 
     expect(page).to have_content("Reset password")
+  end
+
+  scenario "Expired token" do
+    user.send_password_reset_email
+
+    visit "/password_resets/#{user.reset_token}/edit?email=#{user.email}"
+
+    user.update_attribute(:reset_sent_at, 10.hours.ago)
+
+    within(".edit_reset_password") do
+      fill_in "Password", with: "password"
+      fill_in "Confirmation", with: "password"
+    end
+
+    click_button "Update password"
+
+    expect(page).to have_content("Password reset has expired")
+  end
+
+  scenario "Update password successfully" do
+    user.send_password_reset_email
+
+    visit "/password_resets/#{user.reset_token}/edit?email=#{user.email}"
+
+    within(".edit_reset_password") do
+      fill_in "Password", with: "password"
+      fill_in "Confirmation", with: "password"
+    end
+
+    click_button "Update password"
+
+    expect(page).to have_content("Password has been reset.")
   end
 end
