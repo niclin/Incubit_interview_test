@@ -11,6 +11,7 @@ class User < ApplicationRecord
   before_validation :create_user_name
 
   def create_user_name
+    return if self.name.present?
 
     email_user_name = self.email.split("@").first.tr(".", "_")
 
