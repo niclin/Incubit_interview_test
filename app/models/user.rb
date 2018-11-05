@@ -4,7 +4,7 @@ class User < ApplicationRecord
   has_secure_password
 
   before_save { self.email = email.downcase }
-  validates :name, presence: true, length: { minimum: 5 }, if: :name_changed?
+  validates :name, presence: true, length: { minimum: 5 }, if: :name_changed?, on: :update
   validates :email, presence: true, uniqueness: true
   validates :password, presence: true, length: { minimum: 8 }
 
