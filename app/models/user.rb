@@ -44,6 +44,10 @@ class User < ApplicationRecord
     BCrypt::Password.new(reset_digest).is_password?(reset_token)
   end
 
+  def password_reset_expired?
+    reset_sent_at < 6.hours.ago
+  end
+
   private
 
   def random_user_name
